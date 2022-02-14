@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: "Proxima Nova"
+}
+
+.animate__delay-0\.5s {
+    animation-delay: 0.5s !important;
+}
+
+code * {
+    font-family: "Source Code Pro" !important;
+}
