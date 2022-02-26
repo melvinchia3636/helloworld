@@ -16,9 +16,10 @@ MongoClient.connect(connectionString, (err, client) => {
     const languagesCollection = db.collection('languages');
 
     app.get("/languages", (req, res) => {
-        languagesCollection.find().limit(20).toArray(function (err, result) {
+        languagesCollection.find().toArray(function (err, result) {
             if (err) {
                 res.send(err);
+                console.log(err)
             } else {
                 res.setHeader('Content-Type', 'application/json');
                 res.send(JSON.stringify(result));

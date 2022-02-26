@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@iconify/react": "^3.1.3",
+    "@types/react-infinite-scroller": "^1.2.2",
     "@types/react-syntax-highlighter": "^13.5.2",
     "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.2",
@@ -16,6 +17,7 @@
     "postcss": "^8.4.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-infinite-scroller": "^1.2.5",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
     "react-syntax-highlighter": "^15.4.5",
@@ -25,7 +27,15 @@
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@types/react-router-dom": "5",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
     "@vitejs/plugin-react": "^1.0.7",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.2",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
   }
