@@ -69,9 +69,9 @@ function FAB({ callback }: { callback: () => any }) {
   );
 }
 
-function Language({ e }: {e: ILanguage}) {
+function Language({ e, i }: {e: ILanguage, i: number}) {
   return (
-    <div id={`lang-${e.id}`} className="my-8 selection:bg-neutral-900 selection:text-yellow-400 animate__animated flex flex-col animate__fadeInUp">
+    <div id={`lang-${e.id}`} className={`my-8 selection:bg-neutral-900 selection:text-yellow-400 animate__animated flex flex-col ${i < 10 ? 'animate__fadeInUp' : ''}`}>
       <div className="inline-flex flex-row items-end mt-1">
         <span className="min-w-[8rem] inline-flex justify-center text-black-darker pl-4 pr-4 text-base font-medium bg-yellow-400 pt-0.5" style={{ letterSpacing: '1px', transform: 'translateY(1px)', clipPath: 'polygon(calc(100% - 8px) 0px, 100% 8px, 100% 100%, 0px 100%, 0px 0px)' }}>{e.title}</span>
         <span className="h-[4px] w-24 bg-yellow-400" style={{ transform: 'translateY(1px)', clipPath: 'polygon(calc(100% - 4px) 0px, 100% 4px, 100% 100%, 0px 100%, 0px 0px)' }} />
@@ -132,7 +132,7 @@ function Browse() {
         <div className="flex justify-between mt-4 flex-wrap animate__animated animate__fadeInUp">
           {['ALL', ...'#abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('')].map((e) => <button type="button" className={`text-xl text-yellow-400 tracking-widest ${e.toLowerCase() !== alphaFilter ? 'opacity-60' : ' text-4xl font-bold'}`} onClick={() => setAlphaFilter(e.toLowerCase())}>{e}</button>)}
         </div>
-        {data.length > 0 && data.filter((e) => alphaFilter === 'all' || (alphaFilter === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === alphaFilter).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).map((e) => <Language e={e} />)}
+        {data.length > 0 && data.filter((e) => alphaFilter === 'all' || (alphaFilter === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === alphaFilter).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).map((e, i) => <Language e={e} i={i} />)}
       </div>
       <FAB callback={() => document.querySelector('.scroll')?.scrollTo({ top: 0 })} />
     </div>
