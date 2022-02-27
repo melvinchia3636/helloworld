@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-filename-extension */
@@ -9,6 +10,8 @@ import {
   BrowserRouter as Router, Routes, Route, useNavigate, useLocation,
   Link,
 } from 'react-router-dom';
+// @ts-ignore
+import Fade from 'react-reveal/Fade';
 
 export interface ILanguage {
   _id: string;
@@ -71,30 +74,32 @@ function FAB({ callback }: { callback: () => any }) {
 
 function Language({ e, i }: {e: ILanguage, i: number}) {
   return (
-    <div id={`lang-${e.id}`} className={`my-8 selection:bg-neutral-900 selection:text-yellow-400 animate__animated flex flex-col ${i < 10 ? 'animate__fadeInUp' : ''}`}>
-      <div className="inline-flex flex-row items-end mt-1">
-        <span className="min-w-[8rem] inline-flex justify-center text-black-darker pl-4 pr-4 text-base font-medium bg-yellow-400 pt-0.5" style={{ letterSpacing: '1px', transform: 'translateY(1px)', clipPath: 'polygon(calc(100% - 8px) 0px, 100% 8px, 100% 100%, 0px 100%, 0px 0px)' }}>{e.title}</span>
-        <span className="h-[4px] w-24 bg-yellow-400" style={{ transform: 'translateY(1px)', clipPath: 'polygon(calc(100% - 4px) 0px, 100% 4px, 100% 100%, 0px 100%, 0px 0px)' }} />
-      </div>
-      <div className="border-2 relative border-yellow-400 flex flex-col">
-        {e.description.length > 0 && (
-        <div className="w-full bg-yellow-400 py-2 px-3 font-medium tracking-widest text-neutral-900 text-xl">
-          <p className="font-normal tracking-wide my-2 text-base">{e.description}</p>
+    <Fade left>
+      <div id={`lang-${e.id}`} className="my-8 selection:bg-neutral-900 selection:text-yellow-400 animate__animated flex flex-col">
+        <div className="inline-flex flex-row items-end mt-1">
+          <span className="min-w-[8rem] inline-flex justify-center text-black-darker pl-4 pr-4 text-base font-medium bg-yellow-400 pt-0.5" style={{ letterSpacing: '1px', transform: 'translateY(1px)', clipPath: 'polygon(calc(100% - 8px) 0px, 100% 8px, 100% 100%, 0px 100%, 0px 0px)' }}>{e.title}</span>
+          <span className="h-[4px] w-24 bg-yellow-400" style={{ transform: 'translateY(1px)', clipPath: 'polygon(calc(100% - 4px) 0px, 100% 4px, 100% 100%, 0px 100%, 0px 0px)' }} />
         </div>
-        )}
-        <div className="text-yellow-400 overflow-x-auto p-4 selection:text-neutral-900 selection:bg-yellow-400">
-          <pre>
-            <code>
-              {e.code}
-            </code>
-          </pre>
+        <div className="border-2 relative border-yellow-400 flex flex-col">
+          {e.description.length > 0 && (
+          <div className="w-full bg-yellow-400 py-2 px-3 font-medium tracking-widest text-neutral-900 text-xl">
+            <p className="font-normal tracking-wide my-2 text-base">{e.description}</p>
+          </div>
+          )}
+          <div className="text-yellow-400 overflow-x-auto p-4 selection:text-neutral-900 selection:bg-yellow-400">
+            <pre>
+              <code>
+                {e.code}
+              </code>
+            </pre>
+          </div>
+          <button type="button" className="absolute bottom-0 right-0 text-yellow-400 m-4">
+            <Icon icon="uil:copy" className="w-6 h-6" />
+          </button>
         </div>
-        <button type="button" className="absolute bottom-0 right-0 text-yellow-400 m-4">
-          <Icon icon="uil:copy" className="w-6 h-6" />
-        </button>
+        <i className="absolute right-0 bottom-[-3px] h-[3px] w-[35%] rounded-bl-md bg-yellow-400" />
       </div>
-      <i className="absolute right-0 bottom-[-3px] h-[3px] w-[35%] rounded-bl-md bg-yellow-400" />
-    </div>
+    </Fade>
   );
 }
 
@@ -152,20 +157,22 @@ function Languages() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-20 pt-32 items-center px-64 w-full h-full overflow-y-auto overflow-x-hidden scroll">
+    <div className="flex flex-col gap-20 py-32 items-center px-64 w-full h-full overflow-y-auto overflow-x-hidden scroll">
       <div className="w-full border-2 border-yellow-400 animate__animated animate__fadeInUp flex items-center p-4">
         <Icon icon="uil:search" className="w-8 h-8 text-yellow-400" />
         <input className="flex-1 bg-transparent focus:border-none focus:outline-none text-yellow-400 text-xl ml-4 tracking-widest placeholder-yellow-400" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Enter your search query" />
       </div>
       {data.length > 0 && Array.from('#abcdefghijklmnopqrstuvwxyz').map((a) => (
         data.filter((e) => (a === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === a).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).length > 0 && (
-        <div className="text-yellow-400 w-full">
-          <div className="flex items-center gap-4">
-            <h2 className="fuck-my-life text-5xl">{a.toUpperCase()}</h2>
-            <div className="w-full border-b-2 border-yellow-400" />
-          </div>
-          <div className="grid grid-cols-3 mt-6 ml-0.5 gap-y-4 gap-x-12">{data.filter((e) => (a === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === a).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).map((e) => <Link to={`/browse#lang-${e.id}`} className="text-xl tracking-widest break-all hover:underline decoration-2">{e.title}</Link>)}</div>
-        </div>
+          <Fade up>
+            <div className="text-yellow-400 w-full">
+              <div className="flex items-center gap-4">
+                <h2 className="fuck-my-life text-5xl">{a.toUpperCase()}</h2>
+                <div className="w-full border-b-2 border-yellow-400" />
+              </div>
+              <div className="grid grid-cols-3 mt-6 ml-0.5 gap-y-4 gap-x-12">{data.filter((e) => (a === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === a).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).map((e) => <Link to={`/browse#lang-${e.id}`} className="text-xl tracking-widest break-all hover:underline decoration-2">{e.title}</Link>)}</div>
+            </div>
+          </Fade>
         )
       ))}
       <FAB callback={() => document.querySelector('.scroll')?.scrollTo({ top: 0 })} />
