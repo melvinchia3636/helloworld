@@ -108,7 +108,7 @@ function Browse() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch('http://localhost:3001/languages')
+    fetch('https://api.hello-world.thecodeblog.net/languages')
       .then((response) => response.json())
       .then((d) => {
         setData(d.sort((a: ILanguage, b: ILanguage) => a._id > b._id));
@@ -147,7 +147,7 @@ function Languages() {
   const [data, setData] = useState<ILanguage[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/languages')
+    fetch('https://api.hello-world.thecodeblog.net/languages')
       .then((response) => response.json())
       .then((d) => {
         setData(d.sort((a: ILanguage, b: ILanguage) => a._id > b._id));
