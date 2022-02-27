@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Proxima Nova";
+  src: local('Proxima Nova'), url(./assets/Proxima.otf) format('opentype')
+}
+
 * {
     font-family: "Proxima Nova";
     scroll-behavior: smooth;

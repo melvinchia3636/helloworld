@@ -1,9 +1,7 @@
-/* eslint-disable import/extensions */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/react-in-jsx-scope */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 import 'animate.css';
 import {
@@ -30,7 +28,7 @@ function Home() {
   return (
     <div className="h-full flex flex-col gap-1 items-center justify-center overflow-hidden">
       <Icon icon="ant-design:code-outlined" className={`text-yellow-400 w-20 h-20 mb-4 animate__animated ${!willLeave ? 'animate__fadeInUp animate__delay-1s' : 'animate__fadeOutDown'}`} />
-      <h1 className={`uppercase text-yellow-400 text-center font-semibold text-4xl tracking-[0.18em] ml-3 animate__animated ${!willLeave ? 'animate__fadeInUp animate__delay-1s' : 'animate__fadeOutDown'}`}>hello world</h1>
+      <h1 className={`uppercase text-yellow-400 text-center font-bold text-4xl tracking-[0.18em] ml-3 animate__animated ${!willLeave ? 'animate__fadeInUp animate__delay-1s' : 'animate__fadeOutDown'}`}>hello world</h1>
       <h1 className={`uppercase text-yellow-400 font-medium text-lg tracking-[0.18em] animate__animated ${!willLeave ? 'animate__fadeInUp animate__delay-1s' : 'animate__fadeOutDown'}`}>in 1080 languages</h1>
       <div className="flex flex-col gap-4 mt-8">
         <button
@@ -72,7 +70,7 @@ function FAB({ callback }: { callback: () => any }) {
   );
 }
 
-function Language({ e, i }: {e: ILanguage, i: number}) {
+function Language({ e }: {e: ILanguage}) {
   return (
     <Fade left>
       <div id={`lang-${e.id}`} className="my-8 selection:bg-neutral-900 selection:text-yellow-400 animate__animated flex flex-col">
@@ -130,14 +128,14 @@ function Browse() {
   return (
     <div className="flex scroll justify-center w-full h-full overflow-y-auto overflow-x-hidden">
       <div className="h-full w-3/4 items-center pt-32">
-        <div className="w-full border-2 border-yellow-400 animate__animated animate__fadeInUp flex items-center p-4">
-          <Icon icon="uil:search" className="w-8 h-8 text-yellow-400" />
+        <div className="w-full border-2 border-yellow-400 animate__animated animate__fadeInUp overflow-scroll flex items-center p-4">
+          <Icon icon="uil:search" className="w-8 h-8 flex-shrink-0 text-yellow-400" />
           <input className="flex-1 bg-transparent focus:border-none focus:outline-none text-yellow-400 text-xl ml-4 tracking-widest placeholder-yellow-400" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Enter your search query" />
         </div>
-        <div className="flex justify-between mt-4 flex-wrap animate__animated animate__fadeInUp">
+        <div className="flex mt-6 flex-wrap animate__animated animate__fadeInUp gap-x-8 gap-y-4">
           {['ALL', ...'#abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('')].map((e) => <button type="button" className={`text-xl text-yellow-400 tracking-widest ${e.toLowerCase() !== alphaFilter ? 'opacity-60' : ' text-4xl font-bold'}`} onClick={() => setAlphaFilter(e.toLowerCase())}>{e}</button>)}
         </div>
-        {data.length > 0 && data.filter((e) => alphaFilter === 'all' || (alphaFilter === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === alphaFilter).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).map((e, i) => <Language e={e} i={i} />)}
+        {data.length > 0 && data.filter((e) => alphaFilter === 'all' || (alphaFilter === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === alphaFilter).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).map((e) => <Language e={e} />)}
       </div>
       <FAB callback={() => document.querySelector('.scroll')?.scrollTo({ top: 0 })} />
     </div>
@@ -157,25 +155,27 @@ function Languages() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-20 py-32 items-center px-64 w-full h-full overflow-y-auto overflow-x-hidden scroll">
-      <div className="w-full border-2 border-yellow-400 animate__animated animate__fadeInUp flex items-center p-4">
-        <Icon icon="uil:search" className="w-8 h-8 text-yellow-400" />
-        <input className="flex-1 bg-transparent focus:border-none focus:outline-none text-yellow-400 text-xl ml-4 tracking-widest placeholder-yellow-400" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Enter your search query" />
-      </div>
-      {data.length > 0 && Array.from('#abcdefghijklmnopqrstuvwxyz').map((a) => (
-        data.filter((e) => (a === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === a).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).length > 0 && (
-          <Fade up>
-            <div className="text-yellow-400 w-full">
-              <div className="flex items-center gap-4">
-                <h2 className="fuck-my-life text-5xl">{a.toUpperCase()}</h2>
-                <div className="w-full border-b-2 border-yellow-400" />
+    <div className="flex py-32 justify-center w-full h-full overflow-y-auto overflow-x-hidden scroll">
+      <div className="flex flex-col gap-20 w-3/4 h-max items-center py-32">
+        <div className="w-full border-2 border-yellow-400 overflow-scroll animate__animated animate__fadeInUp flex items-center p-4">
+          <Icon icon="uil:search" className="w-8 h-8 text-yellow-400 flex-shrink-0" />
+          <input className="flex-1 bg-transparent focus:border-none focus:outline-none text-yellow-400 text-xl ml-4 tracking-widest placeholder-yellow-400" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Enter your search query" />
+        </div>
+        {data.length > 0 && Array.from('#abcdefghijklmnopqrstuvwxyz').map((a) => (
+          data.filter((e) => (a === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === a).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).length > 0 && (
+            <Fade up>
+              <div className="text-yellow-400 w-full">
+                <div className="flex items-center gap-4">
+                  <h2 className="fuck-my-life text-5xl">{a.toUpperCase()}</h2>
+                  <div className="w-full border-b-2 border-yellow-400" />
+                </div>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] mt-6 ml-0.5 gap-y-4 gap-x-12">{data.filter((e) => (a === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === a).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).map((e) => <Link to={`/browse#lang-${e.id}`} className="text-xl tracking-widest break-all hover:underline decoration-2">{e.title}</Link>)}</div>
               </div>
-              <div className="grid grid-cols-3 mt-6 ml-0.5 gap-y-4 gap-x-12">{data.filter((e) => (a === '#' && e.title.toLowerCase()[0].match(/[^a-z]/)) || e.title.toLowerCase()[0] === a).filter((e) => e.title.toLowerCase().includes(query.toLowerCase())).map((e) => <Link to={`/browse#lang-${e.id}`} className="text-xl tracking-widest break-all hover:underline decoration-2">{e.title}</Link>)}</div>
-            </div>
-          </Fade>
-        )
-      ))}
-      <FAB callback={() => document.querySelector('.scroll')?.scrollTo({ top: 0 })} />
+            </Fade>
+          )
+        ))}
+        <FAB callback={() => document.querySelector('.scroll')?.scrollTo({ top: 0 })} />
+      </div>
     </div>
   );
 }
