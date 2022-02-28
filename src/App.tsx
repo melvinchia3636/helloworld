@@ -1,3 +1,6 @@
+/* eslint-disable no-alert */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/react-in-jsx-scope */
@@ -10,6 +13,8 @@ import {
 } from 'react-router-dom';
 // @ts-ignore
 import Fade from 'react-reveal/Fade';
+import copy from 'copy-to-clipboard';
+import languageData from './data';
 
 export interface ILanguage {
   _id: string;
@@ -52,7 +57,6 @@ function Home() {
           className={`w-80 py-4 pt-[1.1rem] uppercase border-yellow-400 border-[2.4px] text-yellow-400 flex justify-center font-semibold tracking-[0.18em] animate__animated ${!willLeave ? 'animate__fadeInRight animate__delay-1s' : 'animate__fadeOutRight'}`}
         >
           language list
-
         </button>
       </div>
       <div className="opacity-5 w-[90vw] h-[90vw] mb-4 z-[-1] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -91,7 +95,7 @@ function Language({ e }: {e: ILanguage}) {
               </code>
             </pre>
           </div>
-          <button type="button" className="absolute bottom-0 right-0 text-yellow-400 m-4">
+          <button onClick={() => { copy(e.code); alert('Language copied to clipboard!'); }} type="button" className="absolute bottom-0 right-0 text-yellow-400 m-4">
             <Icon icon="uil:copy" className="w-6 h-6" />
           </button>
         </div>
@@ -102,18 +106,10 @@ function Language({ e }: {e: ILanguage}) {
 }
 
 function Browse() {
-  const [data, setData] = useState<ILanguage[]>([]);
+  const [data] = useState<ILanguage[]>(languageData);
   const [query, setQuery] = useState('');
   const [alphaFilter, setAlphaFilter] = useState('all');
   const location = useLocation();
-
-  useEffect(() => {
-    fetch('https://api.hello-world.thecodeblog.net/languages')
-      .then((response) => response.json())
-      .then((d) => {
-        setData(d.sort((a: ILanguage, b: ILanguage) => a._id > b._id));
-      });
-  }, []);
 
   useEffect(() => {
     if (data.length && location.hash) {
@@ -144,15 +140,7 @@ function Browse() {
 
 function Languages() {
   const [query, setQuery] = useState('');
-  const [data, setData] = useState<ILanguage[]>([]);
-
-  useEffect(() => {
-    fetch('https://api.hello-world.thecodeblog.net/languages')
-      .then((response) => response.json())
-      .then((d) => {
-        setData(d.sort((a: ILanguage, b: ILanguage) => a._id > b._id));
-      });
-  }, []);
+  const [data] = useState<ILanguage[]>(languageData);
 
   return (
     <div className="flex py-32 justify-center w-full h-full overflow-y-auto overflow-x-hidden scroll">
