@@ -38,11 +38,11 @@ If you want to run the website on your local machine:
 
 ## 📈 Status
 
-This project is fully completed. If any bugs are found, please file an issue here, and I'll resolve it ASAP.
+This project is fully completed. If any bugs is found, please file an issue here, and I'll resolve it ASAP.
 
 ## 💡 Inspirations 
 
-This project was inspired by Mkabumattar' ![Hello World in 1080 programming languages](https://mkabumattar.github.io/Hello-World/) project.
+This project was inspired by Mkabumattar's ![Hello World in 1080 programming languages](https://mkabumattar.github.io/Hello-World/) project.
  
 ## 📄 License
 
